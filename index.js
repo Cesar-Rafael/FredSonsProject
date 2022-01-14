@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 require('./routes/manager')(app);
 
 app.get('*', function (req, res) {
-    res.render('app/404')
+    res.render('app/index')
 });
 
 const PORT = process.env.PORT || 8000;
