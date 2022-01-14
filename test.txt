@@ -1,0 +1,79 @@
+How to call a LinkedIn API
+and get a Linkedin OAuth Access Token
+---
+
+Prerequisites:
+LinkedIn Account
+curl
+
+---
+Client Registration
+
+go to:
+https://www.linkedin.com/developers/apps
+
+click on "create new" or use this direct link:
+https://www.linkedin.com/developers/apps/new
+
+What you need:
+
+redirectURI = https://www.linkedin.com/in/cesar-david-rafael-artica-a6a504199/
+URLENCODE(redirectURI) = https%3A%2F%2Fwww.linkedin.com%2Fin%2Fcesar-david-rafael-artica-a6a504199%2F
+clientId = 78sitt9anum1q2
+clientSecret = XW0MRYPIn2APq7SV
+
+
+---
+Authorization Endpoint (Browser)
+
+What you need:
+scope = r_liteprofile%20r_emailaddress%20w_member_social
+scope = r_basicprofile
+
+https://www.linkedin.com/oauth/v2/authorization?response_type=code&state=987654321&scope=r_liteprofile%20r_emailaddress%20w_member_social&client_id=78sitt9anum1q2&redirect_uri=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fcesar-david-rafael-artica-a6a504199%2F
+https://www.linkedin.com/oauth/v2/authorization?response_type=code&state=987654321&scope=r_basicprofile&client_id=78sitt9anum1q2&redirect_uri=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fcesar-david-rafael-artica-a6a504199%2F
+
+
+What you need from the response:
+code = AQTPRKDeant2_2UC3hLfJmtypNfCwt4Zoc7tEdRcpbwIyUmDD0yPaLQy3nZWsIceLg_peRkLnWQKAYu_yDzGw6O3krB96emfYHStGGommM7ANqmeNy6YRMGzr9wzSzhBXB1rNH_cJOp-0jBOU6T30PSIVOpuwVXCKyJDinzpg_NBvLNvp6HtR0oSsv3kQV0Up6WZwYxHYdK8ubQWW4k
+
+---
+Token Endpoint:
+
+curl -ik -X POST https://www.linkedin.com/oauth/v2/accessToken \
+-d grant_type=authorization_code \
+-d code=AQTPRKDeant2_2UC3hLfJmtypNfCwt4Zoc7tEdRcpbwIyUmDD0yPaLQy3nZWsIceLg_peRkLnWQKAYu_yDzGw6O3krB96emfYHStGGommM7ANqmeNy6YRMGzr9wzSzhBXB1rNH_cJOp-0jBOU6T30PSIVOpuwVXCKyJDinzpg_NBvLNvp6HtR0oSsv3kQV0Up6WZwYxHYdK8ubQWW4k \
+-d redirect_uri=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fcesar-david-rafael-artica-a6a504199%2F \
+-d client_id=78sitt9anum1q2 \
+-d client_secret=XW0MRYPIn2APq7SV
+
+What you need from the response:
+access_token = AQW9lQUs2YPFFa_SUBkIx5mD5XZ-yary4V2rzSq-aSIZM4sQ3accNt3RZHQg77cxvqmHD0SbfJXwI3GSPCMHWw4yd2VC5xg0pE6OSuci2ieyseJmJutIqFFWVMkduDNKycYzLx_qVRSaYlka-XoGag0ERP7L1pxhVhkJIRuQSKnkTuRzjiqoIFGMTPfnQy5L9r3AopVSalooR6aKG5UlwEo008S6-Q-5fLK6-bfUS1T1SfNUiodCn4dDersIBv6jZqiPFlNAcUTZOBNBZlpVXO7De6QuW8SMOB3HAkkhtb_nErbQ_MWrtDswmCaWlOOFboKus64f9ky2-_6KBezOCeyObLhiLQ
+
+{"access_token":"AQVf9evZbr8OC-nrkDjJicQP_ViS0LNthdbRQfELvwR007uOBjXAOBU3c63DTZx3lNrVlyvgkVKboytRkD39FO-4pXvy6i6XTiGeArEIxVmI9QLc4A3qYQeiFrMPkJ8uD14HgINVuQaOrs4-e02H_2OV_RwrRzJNK9tVG1Y-ixoobC91N8OIGzH1msXTVt0Dej5bMaCFLC-E3sr_373dDwr7s_yh-3EdRgQBWGFsyvNWxzuMCiK4KyoVeIJydro398JQrgBvo1NsGqB2_KrY6SGoQQySXA5ntPFo6U2GzUVWJTsw4_HwQiVPd7KbtnP_ChAkO9oOg2uo2Xdv7Fn1yFtsBftePg","expires_in":5183999}
+
+---
+Resource Access:
+
+curl https://api.linkedin.com/v2/me -H "Authorization: Bearer AQVf9evZbr8OC-nrkDjJicQP_ViS0LNthdbRQfELvwR007uOBjXAOBU3c63DTZx3lNrVlyvgkVKboytRkD39FO-4pXvy6i6XTiGeArEIxVmI9QLc4A3qYQeiFrMPkJ8uD14HgINVuQaOrs4-e02H_2OV_RwrRzJNK9tVG1Y-ixoobC91N8OIGzH1msXTVt0Dej5bMaCFLC-E3sr_373dDwr7s_yh-3EdRgQBWGFsyvNWxzuMCiK4KyoVeIJydro398JQrgBvo1NsGqB2_KrY6SGoQQySXA5ntPFo6U2GzUVWJTsw4_HwQiVPd7KbtnP_ChAkO9oOg2uo2Xdv7Fn1yFtsBftePg"
+curl https://api.linkedin.com/v2/people?id=291498206 "Authorization: Bearer AQVf9evZbr8OC-nrkDjJicQP_ViS0LNthdbRQfELvwR007uOBjXAOBU3c63DTZx3lNrVlyvgkVKboytRkD39FO-4pXvy6i6XTiGeArEIxVmI9QLc4A3qYQeiFrMPkJ8uD14HgINVuQaOrs4-e02H_2OV_RwrRzJNK9tVG1Y-ixoobC91N8OIGzH1msXTVt0Dej5bMaCFLC-E3sr_373dDwr7s_yh-3EdRgQBWGFsyvNWxzuMCiK4KyoVeIJydro398JQrgBvo1NsGqB2_KrY6SGoQQySXA5ntPFo6U2GzUVWJTsw4_HwQiVPd7KbtnP_ChAkO9oOg2uo2Xdv7Fn1yFtsBftePg"
+curl https://api.linkedin.com/v2/carlos-melgarejo-roman -H "Authorization: Bearer AQVf9evZbr8OC-nrkDjJicQP_ViS0LNthdbRQfELvwR007uOBjXAOBU3c63DTZx3lNrVlyvgkVKboytRkD39FO-4pXvy6i6XTiGeArEIxVmI9QLc4A3qYQeiFrMPkJ8uD14HgINVuQaOrs4-e02H_2OV_RwrRzJNK9tVG1Y-ixoobC91N8OIGzH1msXTVt0Dej5bMaCFLC-E3sr_373dDwr7s_yh-3EdRgQBWGFsyvNWxzuMCiK4KyoVeIJydro398JQrgBvo1NsGqB2_KrY6SGoQQySXA5ntPFo6U2GzUVWJTsw4_HwQiVPd7KbtnP_ChAkO9oOg2uo2Xdv7Fn1yFtsBftePg"
+curl https://api.linkedin.com/v2/291498206 -H "Authorization: Bearer AQVf9evZbr8OC-nrkDjJicQP_ViS0LNthdbRQfELvwR007uOBjXAOBU3c63DTZx3lNrVlyvgkVKboytRkD39FO-4pXvy6i6XTiGeArEIxVmI9QLc4A3qYQeiFrMPkJ8uD14HgINVuQaOrs4-e02H_2OV_RwrRzJNK9tVG1Y-ixoobC91N8OIGzH1msXTVt0Dej5bMaCFLC-E3sr_373dDwr7s_yh-3EdRgQBWGFsyvNWxzuMCiK4KyoVeIJydro398JQrgBvo1NsGqB2_KrY6SGoQQySXA5ntPFo6U2GzUVWJTsw4_HwQiVPd7KbtnP_ChAkO9oOg2uo2Xdv7Fn1yFtsBftePg"
+curl https://api.linkedin.com/v2/urn:li:person:291498206 -H "Authorization: Bearer AQVf9evZbr8OC-nrkDjJicQP_ViS0LNthdbRQfELvwR007uOBjXAOBU3c63DTZx3lNrVlyvgkVKboytRkD39FO-4pXvy6i6XTiGeArEIxVmI9QLc4A3qYQeiFrMPkJ8uD14HgINVuQaOrs4-e02H_2OV_RwrRzJNK9tVG1Y-ixoobC91N8OIGzH1msXTVt0Dej5bMaCFLC-E3sr_373dDwr7s_yh-3EdRgQBWGFsyvNWxzuMCiK4KyoVeIJydro398JQrgBvo1NsGqB2_KrY6SGoQQySXA5ntPFo6U2GzUVWJTsw4_HwQiVPd7KbtnP_ChAkO9oOg2uo2Xdv7Fn1yFtsBftePg"
+curl https://api.linkedin.com/v2/ -H "Authorization: Bearer AQVf9evZbr8OC-nrkDjJicQP_ViS0LNthdbRQfELvwR007uOBjXAOBU3c63DTZx3lNrVlyvgkVKboytRkD39FO-4pXvy6i6XTiGeArEIxVmI9QLc4A3qYQeiFrMPkJ8uD14HgINVuQaOrs4-e02H_2OV_RwrRzJNK9tVG1Y-ixoobC91N8OIGzH1msXTVt0Dej5bMaCFLC-E3sr_373dDwr7s_yh-3EdRgQBWGFsyvNWxzuMCiK4KyoVeIJydro398JQrgBvo1NsGqB2_KrY6SGoQQySXA5ntPFo6U2GzUVWJTsw4_HwQiVPd7KbtnP_ChAkO9oOg2uo2Xdv7Fn1yFtsBftePg"
+
+curl https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~)) -H "Authorization: Bearer AQVf9evZbr8OC-nrkDjJicQP_ViS0LNthdbRQfELvwR007uOBjXAOBU3c63DTZx3lNrVlyvgkVKboytRkD39FO-4pXvy6i6XTiGeArEIxVmI9QLc4A3qYQeiFrMPkJ8uD14HgINVuQaOrs4-e02H_2OV_RwrRzJNK9tVG1Y-ixoobC91N8OIGzH1msXTVt0Dej5bMaCFLC-E3sr_373dDwr7s_yh-3EdRgQBWGFsyvNWxzuMCiK4KyoVeIJydro398JQrgBvo1NsGqB2_KrY6SGoQQySXA5ntPFo6U2GzUVWJTsw4_HwQiVPd7KbtnP_ChAkO9oOg2uo2Xdv7Fn1yFtsBftePg"
+
+curl https://api.linkedin.com/v2/people?id=291498206 -H "Authorization: Bearer AQVf9evZbr8OC-nrkDjJicQP_ViS0LNthdbRQfELvwR007uOBjXAOBU3c63DTZx3lNrVlyvgkVKboytRkD39FO-4pXvy6i6XTiGeArEIxVmI9QLc4A3qYQeiFrMPkJ8uD14HgINVuQaOrs4-e02H_2OV_RwrRzJNK9tVG1Y-ixoobC91N8OIGzH1msXTVt0Dej5bMaCFLC-E3sr_373dDwr7s_yh-3EdRgQBWGFsyvNWxzuMCiK4KyoVeIJydro398JQrgBvo1NsGqB2_KrY6SGoQQySXA5ntPFo6U2GzUVWJTsw4_HwQiVPd7KbtnP_ChAkO9oOg2uo2Xdv7Fn1yFtsBftePg"
+
+
+What you need from the response:
+firstname = CESAR DAVID
+
+---------
+
+Documentation
+
+https://docs.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow
+We are on API v2
+Upgrade notice from v1 to v2: https://developer.linkedin.com/blog/posts/2018/redirecting-oauth-uas

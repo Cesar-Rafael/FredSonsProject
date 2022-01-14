@@ -1,0 +1,26 @@
+{
+  "localizedLastName": "RAFAEL ARTICA",
+  "profilePicture": {
+    "displayImage": "urn:li:digitalmediaAsset:C4E03AQEdaJZzZ4Q-PQ"
+  },
+  "firstName": {
+    "localized": {
+      "es_ES": "CESAR DAVID"
+    },
+    "preferredLocale": {
+      "country": "ES",
+      "language": "es"
+    }
+  },
+  "lastName": {
+    "localized": {
+      "es_ES": "RAFAEL ARTICA"
+    },
+    "preferredLocale": {
+      "country": "ES",
+      "language": "es"
+    }
+  },
+  "id": "dYbGGkkwKT",
+  "localizedFirstName": "CESAR DAVID"
+}
