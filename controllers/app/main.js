@@ -4,12 +4,15 @@ const cheerio = require('cheerio')
 const fetch = require('superagent')
 const { getData, postData } = require('../utils/fetch')
 const { urlencode, clientId, clientSecret } = require('../../config/linkedin')
+const { apiKey } = require('../../config/google')
 const { PythonShell } = require('python-shell')
 const { getDirectoryProject } = require('../utils/getDirectoryProject')
 const dirProject = getDirectoryProject(__dirname, 1);
 const pythonScript = `${dirProject}/utils/getUserProfile.py`
 const TwitterClient = require('twitter-api-client').TwitterClient
 const twitterKeys = require('../../config/twitter')
+const SerpApi = require('google-search-results-nodejs')
+const search = new SerpApi.GoogleSearch(apiKey)
 
 // Twitter
 
@@ -18,7 +21,7 @@ const twitterClient = new TwitterClient({
     apiSecret: twitterKeys.apiKeySecret,
     accessToken: twitterKeys.accessToken,
     accessTokenSecret: twitterKeys.accessTokenSecret,
-});
+})
 
 router.route('/')
     .get(async (req, res) => {
@@ -37,7 +40,7 @@ router.route('/')
             console.log(e)
             res.render('app/index')
         }
-    });
+    })
 
 router.route('/search')
     .get(async (req, res) => {
@@ -63,8 +66,7 @@ router.route('/search')
         }
 
         res.render('app/index')
-    });
-
+    })
 
 router.route('/search-data')
     .post(async (req, res) => {
@@ -86,7 +88,7 @@ router.route('/search-data')
             console.log(e)
         }
 
-    });
+    })
 
 router.route('/twitter/:query')
     .get(async (req, res) => {
@@ -100,7 +102,17 @@ router.route('/twitter/:query')
             console.error(err)
             res.status(500).send('An error occurred, please try again later.')
         })
-    });
+    })
+
+router.route('/google')
+    .get(async (req, res) => {
+        await search.json({
+            q: "Franccesco Jaimes Agreda",
+            location: "Lima Region"
+        }, (result) => {
+            res.json({content: result}).status(200)
+        })
+    })
 
 /*
     res.render("/", {

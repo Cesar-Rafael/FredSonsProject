@@ -38,5 +38,5 @@ app.get('*', (req, res) => {
 var httpServer = http.createServer(app)
 var httpsServer = https.createServer(credentials, app)
 
-httpServer.listen(process.env.HTTP_PORT || 8000, () => console.log("Server Started At: http://localhost:" + (process.env.HTTP_PORT || 8000)))
+httpServer.listen(process.env.HTTP_PORT || 8080, () => console.log("Server Started At: http://localhost:" + (process.env.HTTP_PORT || 8080)))
 httpsServer.listen(process.env.HTTPS_PORT || 8443, () => console.log("Server Secure Started At: https://localhost:" + (process.env.HTTPS_PORT || 8443)))
