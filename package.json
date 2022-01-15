@@ -1,7 +1,7 @@
 {
   "name": "fredsons-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "FredSons Project for Hackaton",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index",

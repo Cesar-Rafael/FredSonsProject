@@ -5,10 +5,10 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 
 // Initializations
-const app = express();
+const app = express()
 
 app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'views')) // ./views
+app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -22,11 +22,10 @@ app.use(bodyParser.json({ limit: '50mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 
 // Routes
-
 require('./routes/manager')(app)
 
-app.get('*', function (req, res) {
-    res.render('app/index')
+app.get('*', (req, res) => {
+    res.render('app/404')
 });
 
 const PORT = process.env.PORT || 8000
