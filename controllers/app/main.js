@@ -70,19 +70,18 @@ router.route('/search')
 
 function convertToName(publicId) {
     let array = publicId.split('-');
-    console.log("array", array);
     let name = '';
     let flag = false;
     array.forEach(word => {
         flag = false;
         for (let i = 0; i < word.length; i++) {
-            if(i >= '0' && i <= '9') {
+            if(word[i] >= '0' && word[i] <= '9') {
                 flag = true; 
                 break;
             }
         }
-        if(flag != true) {
-            name += word;
+        if(flag == false) {
+            name += ' ' + word;
         }
     });
     return name;
@@ -106,6 +105,14 @@ router.route('/search-data')
                 response.result = 'OK'
                 res.json(response).status(200)
             });
+
+            await search.json({
+                q: name,
+                location: "Lima Region"
+            }, (result) => {
+                res.json({con: result}).status(200)
+            })
+
         } catch (e) {
             console.log(e)
         }
