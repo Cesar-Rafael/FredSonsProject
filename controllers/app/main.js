@@ -68,6 +68,26 @@ router.route('/search')
         res.render('app/index')
     })
 
+function convertToName(publicId) {
+    let array = publicId.split('-');
+    console.log("array", array);
+    let name = '';
+    let flag = false;
+    array.forEach(word => {
+        flag = false;
+        for (let i = 0; i < word.length; i++) {
+            if(i >= '0' && i <= '9') {
+                flag = true; 
+                break;
+            }
+        }
+        if(flag != true) {
+            name += word;
+        }
+    });
+    return name;
+}
+
 router.route('/search-data')
     .post(async (req, res) => {
         let response = { result: 'NOK' }
@@ -75,7 +95,9 @@ router.route('/search-data')
             const { publicUrl } = req.body
             // Example: https://www.linkedin.com/in/carlos-melgarejo-roman-291498206/
             let publicId = publicUrl.split('/')[4]
-
+            let name = convertToName(publicId);
+            console.log("publicID", publicId);
+            console.log("name", name);
             await PythonShell.run(pythonScript, { mode: 'text', args: [publicId] }, async function (err, results) {
                 if (err) throw err;
                 let result = results[0]
