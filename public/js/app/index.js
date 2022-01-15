@@ -1,14 +1,9 @@
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+import { postData } from '/utils/fetch.js'
 
-$(async function () {
-    let $time = $('#time');
-
-    while (true) {
-        let today = new Date();
-        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        $time.html(time);
-        await sleep(1000);
-    }
+$(async () => {
+    $('#search-profile').on('click', async () => {
+        let publicUrl = $('#public-url').val()
+        let response = await postData('/search-data', { publicUrl })
+        console.log(response)
+    })
 });

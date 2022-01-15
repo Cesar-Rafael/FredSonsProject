@@ -4,6 +4,10 @@ const cheerio = require('cheerio')
 const fetch = require('superagent')
 const { getData, postData } = require('../utils/fetch')
 const { urlencode, clientId, clientSecret } = require('../../config/linkedin')
+const { PythonShell } = require('python-shell')
+const { getDirectoryProject } = require('../utils/getDirectoryProject')
+const dirProject = getDirectoryProject(__dirname, 1);
+const pythonScript = `${dirProject}/utils/getUserProfile.py`
 
 router.route('/')
     .get(async (req, res) => {
@@ -50,6 +54,28 @@ router.route('/search')
         res.render('app/index')
     });
 
+
+router.route('/search-data')
+    .post(async (req, res) => {
+        let response = { result: 'NOK' }
+        try {
+            const { publicUrl } = req.body
+            // Example: https://www.linkedin.com/in/carlos-melgarejo-roman-291498206/
+            let publicId = publicUrl.split('/')[4]
+
+            await PythonShell.run(pythonScript, { mode: 'text', args: [publicId] }, async function (err, results) {
+                if (err) throw err;
+                let result = results[0]
+                result = result.replace(/False/g, false).replace(/True/g, true).replace(/'/g, '"')
+                response.content = JSON.parse(result)
+                response.result = 'OK'
+                res.json(response).status(200)
+            });
+        } catch (e) {
+            console.log(e)
+        }
+
+    });
 /*
     res.render("/", {
         // Lite fields

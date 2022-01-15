@@ -26,6 +26,7 @@
     "npm": "^7.24.1",
     "path": "^0.12.7",
     "pm2": "^5.1.2",
+    "python-shell": "^3.0.1",
     "superagent": "^6.1.0"
   },
   "devDependencies": {
