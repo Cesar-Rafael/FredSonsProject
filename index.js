@@ -3,6 +3,13 @@ const cookieParser = require('cookie-parser')
 const path = require('path')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
+const fs = require('fs')
+const http = require('http')
+const https = require('https')
+const privateKey = fs.readFileSync('sslcert/fredsons.key', 'utf8')
+const certificate = fs.readFileSync('sslcert/fredsons.crt', 'utf8')
+
+var credentials = { key: privateKey, cert: certificate };
 
 // Initializations
 const app = express()
@@ -28,6 +35,8 @@ app.get('*', (req, res) => {
     res.render('app/404')
 });
 
-const PORT = process.env.PORT || 8000
+var httpServer = http.createServer(app)
+var httpsServer = https.createServer(credentials, app)
 
-app.listen(PORT, () => console.log("Server Started At: http://localhost:" + PORT))
+httpServer.listen(process.env.HTTP_PORT || 8000, () => console.log("Server Started At: http://localhost:" + (process.env.HTTP_PORT || 8000)))
+httpsServer.listen(process.env.HTTPS_PORT || 8443, () => console.log("Server Secure Started At: https://localhost:" + (process.env.HTTPS_PORT || 8443)))

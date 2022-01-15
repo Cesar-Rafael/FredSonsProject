@@ -8,6 +8,17 @@ const { PythonShell } = require('python-shell')
 const { getDirectoryProject } = require('../utils/getDirectoryProject')
 const dirProject = getDirectoryProject(__dirname, 1);
 const pythonScript = `${dirProject}/utils/getUserProfile.py`
+const TwitterClient = require('twitter-api-client').TwitterClient
+const twitterKeys = require('../../config/twitter')
+
+// Twitter
+
+const twitterClient = new TwitterClient({
+    apiKey: twitterKeys.apiKey,
+    apiSecret: twitterKeys.apiKeySecret,
+    accessToken: twitterKeys.accessToken,
+    accessTokenSecret: twitterKeys.accessTokenSecret,
+});
 
 router.route('/')
     .get(async (req, res) => {
@@ -76,6 +87,21 @@ router.route('/search-data')
         }
 
     });
+
+router.route('/twitter/:query')
+    .get(async (req, res) => {
+        const query = req.params.query
+
+        twitterClient.tweets.search({
+            q: query
+        }).then((response) => {
+            res.send(response)
+        }).catch((err) => {
+            console.error(err)
+            res.status(500).send('An error occurred, please try again later.')
+        })
+    });
+
 /*
     res.render("/", {
         // Lite fields
