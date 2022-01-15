@@ -1,0 +1,3 @@
+module.exports.apiKey = 'smAikUF4rFpyso5ZBmiCwe85j'
+module.exports.apiKeySecret = 'c2IiDqZano1UMeznRo1FtSOJ9FU8Bhpb3MoIwokyAPjpwetF2k'
+module.exports.bearerToken = 'AAAAAAAAAAAAAAAAAAAAAJOUYAEAAAAAdggOl2gKmQHDtfuEYMv4Nbxyo9U%3DwRrdDTrjeCVNO121YNVOPwIZQJMp18VLeTVoc2OegTGJ8BChtX';
