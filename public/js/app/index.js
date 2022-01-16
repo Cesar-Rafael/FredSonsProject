@@ -14,6 +14,7 @@ $(async () => {
         }
 
         let response = await postData('/search-person-information', { publicUrl })
+        console.log(response)
     })
 
     $('#start-searching').on('click', () => {

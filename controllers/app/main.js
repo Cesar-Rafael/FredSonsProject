@@ -48,7 +48,9 @@ router.route('/search-person-information')
             let publicId = publicUrl.split('/')[4] // Get the publicId which is the linkedin publicUrl last part 
             let linkedinData = await postData('http://10.150.0.3:3000/get-linkedin-data', { publicId }) // Call the flask API that collects all the linkedin information 
             let name = linkedinData.firstName + linkedinData.lastName // Get the name which will be the input for the Google Search
+
             response.content.linkedin = linkedinData // Save the linkedin information in response
+
             // Call the Google API for collects all the google information
             await googleClient.json({
                 q: name, // The query search is the name person
@@ -56,12 +58,19 @@ router.route('/search-person-information')
             }, (result) => {
                 response.content.google = result // Save the google information in response
                 response.result = 'OK'
+                response.content = filterInformation(response.content)
+                res.json(response).status(200)
             })
+
         } catch (e) {
             console.log(e)
+            res.json(response).status(200)
         }
+    })
 
-        res.json(response).status(200)
+router.route('/profile')
+    .get(async (req, res) => {
+        res.render('app/profile')
     })
 
 // API that gets twitter information, but It's also limited for the basic plan, even so, we send a form expecting we can access to all APIs 
@@ -81,3 +90,8 @@ router.route('/twitter/:query')
     })
 
 module.exports = router;
+
+function filterInformation(data) {
+    console.log("data", data)
+    return data
+}
