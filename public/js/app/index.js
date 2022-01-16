@@ -1,4 +1,3 @@
-import { postData } from '/utils/fetch.js'
 import { showNotification } from '/utils/showNotification.js'
 
 $(async () => {
@@ -13,15 +12,7 @@ $(async () => {
             return;
         }
 
-        let response = await postData('/search-person-information', { publicUrl })
-        console.log(response)
-    })
-
-    $('#start-searching').on('click', () => {
-        $('#public-url').focus()
-        $('#public-url').addClass('is-valid')
-        setTimeout(() => {
-            $('#public-url').removeClass('is-valid')
-        }, 1500)
+        let publicId = publicUrl.split('/')[4] // Get the publicId which is the linkedin publicUrl last part 
+        window.location.replace(`/profile?publicId=${publicId}`)
     })
 });

@@ -1,12 +1,12 @@
 const superagent = require("superagent")
 const token = require('../../db/models/token')
 
-async function getData(url = '') {
+async function getData(url = '', bearerToken = undefined) {
   let accessToken = await token.findOne({ id: 2 })
 
   return await superagent
     .get(url)
-    .set('Authorization', `Bearer ${accessToken.code}`)
+    .set('Authorization', `Bearer ${bearerToken || accessToken.code}`)
     .then((res) => {
       return res.body;
     })
