@@ -2440,6 +2440,7 @@ var SortList = (function() {
 
 'use strict';
 
+/*
 var Notify = (function() {
 
 	// Variables
@@ -2511,7 +2512,7 @@ var Notify = (function() {
 		})
 	}
 
-})();
+})();*/
 
 //
 // Onscreen - viewport checker

@@ -46,23 +46,6 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Información Actual de Facebook</h5>
-                      <span class="h3 font-weight-bold mb-0">Una de las redes sociales más grandes del mundo el cual contiene información relevante</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
-                        <i class="fab fa-facebook-square"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-md-6 col-sm-12">
-              <div class="card card-stats">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Información Actual de Google</h5>
                       <span class="h3 font-weight-bold mb-0">El buscador de información más popular del mundo que contiene información general</span>
                     </div>
@@ -75,8 +58,26 @@
                 </div>
               </div>
             </div>
+            <div class="col-xl-4 col-md-6 col-sm-12">
+              <div class="card card-stats">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Información de Facebook y Twitter</h5>
+                      <span class="h3 font-weight-bold mb-0">Unas de las redes sociales más grandes del mundo que contienen información relevante</span>
+                      <span class="h4 font-weight-bold mb-0">(Proximamente)</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-gradient-primary text-white rounded-circle shadow">
+                        <i class="fab fa-facebook-square"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="col-12">
-              <button class="btn btn-icon btn-info" type="button">
+              <button class="btn btn-icon btn-info" type="button" id="start-searching">
                 <span class="btn-inner--text">Empezar a buscar</span>
                 <span class="btn-inner--icon"><i class="fas fa-search"></i></span>
               </button>
@@ -99,9 +100,10 @@
     </div>
   </div>
 
-  <%- include('../partials/scripts', {view: 'sb-home'}); %>
-  <!-- Main JS -->
-  <script src="/assets/js/argon.js?v=1.1.0"></script>
+  <%- include('../partials/scripts', {view: 'sb-search'}); %>
+  <script src="/assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <!-- Core JS -->
+  <script src="/js/app/config.js"></script>
   <!-- Personalization JS -->
   <script src="/js/app/index.js" type="module"></script>
 
