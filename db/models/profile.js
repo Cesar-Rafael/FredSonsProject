@@ -13,7 +13,7 @@ const profile = new mongoose.Schema({
     type: mongoose.Schema.Types.Mixed,
     default: {}
   },
-  expire_at: { type: Date, default: Date.now, expires: 8000 }
+  expire_at: { type: Date, default: Date.now, expires: 10000 }
 });
 
 module.exports = db.model('profiles', profile)
