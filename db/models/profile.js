@@ -5,9 +5,15 @@ const profile = new mongoose.Schema({
   publicId: String,
   linkedin: mongoose.Schema.Types.Mixed,
   google: mongoose.Schema.Types.Mixed,
-  twitter: mongoose.Schema.Types.Mixed,
-  faceInformation: mongoose.Schema.Types.Mixed,
-  expire_at: { type: Date, default: Date.now, expires: 600 }
+  twitter: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
+  },
+  photoInformation: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
+  },
+  expire_at: { type: Date, default: Date.now, expires: 8000 }
 });
 
 module.exports = db.model('profiles', profile)

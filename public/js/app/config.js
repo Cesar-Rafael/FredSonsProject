@@ -120,45 +120,69 @@ var Layout = (function () {
 
 'use strict';
 
-var DatatableBasic = (function() {
+var DatatableBasic = (function () {
 
-	// Variables
+  // Variables
 
-	var $dtBasic = $('#datatable-basic');
+  var $dtBasic = $('#datatable-basic');
 
 
-	// Methods
+  // Methods
 
-	function init($this) {
+  function init($this) {
 
-		// Basic options. For more options check out the Datatables Docs:
-		// https://datatables.net/manual/options
+    // Basic options. For more options check out the Datatables Docs:
+    // https://datatables.net/manual/options
 
-		var options = {
-			keys: !0,
-			select: {
-				style: "multi"
-			},
-			language: {
-				paginate: {
-					previous: "<i class='fas fa-angle-left'>",
-					next: "<i class='fas fa-angle-right'>"
-				}
-			},
-		};
+    var options = {
+      keys: !0,
+      select: {
+        style: "multi"
+      },
+      language: {
+        paginate: {
+          previous: "<i class='fas fa-angle-left'>",
+          next: "<i class='fas fa-angle-right'>"
+        }
+      },
+    };
 
-		// Init the datatable
+    // Init the datatable
 
-		var table = $this.on( 'init.dt', function () {
-			$('div.dataTables_length select').removeClass('custom-select custom-select-sm');
+    var table = $this.on('init.dt', function () {
+      $('div.dataTables_length select').removeClass('custom-select custom-select-sm');
 
-	    }).DataTable(options);
-	}
+    }).DataTable(options);
+  }
 
-	// Events
+  // Events
 
-	if ($dtBasic.length) {
-		init($dtBasic);
-	}
+  if ($dtBasic.length) {
+    init($dtBasic);
+  }
+
+})();
+
+'use strict';
+
+var Tooltip = (function () {
+
+  // Variables
+
+  var $tooltip = $('[data-toggle="tooltip"]');
+
+
+  // Methods
+
+  function init() {
+    $tooltip.tooltip();
+  }
+
+
+  // Events
+
+  if ($tooltip.length) {
+    init();
+  }
 
 })();

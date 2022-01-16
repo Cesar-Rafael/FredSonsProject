@@ -78,18 +78,27 @@ def get_face_information():
 
     output_age = post_model_outputs_response_age.outputs[0]
     output_ethnic = post_model_outputs_response_ethnic.outputs[0]
-
+    
     age = '{'
-    for concept in output_age.data.concepts:
-        age = age + '"%s": "%.2f",' % (concept.name, concept.value)
+    for i in range(len(output_age.data.concepts)):
+        concept = output_age.data.concepts[i]
+        if (i != len(output_age.data.concepts) - 1):
+            age = age + '"%s": "%.2f",' % (concept.name, concept.value)
+        else:
+            age = age + '"%s": "%.2f"' % (concept.name, concept.value)
     age = age + '}'
 
     ethnic = '{'
-    for concept in output_ethnic.data.concepts:
-        ethnic = ethnic + '"%s": "%.2f",' % (concept.name, concept.value)
+    for i in range(len(output_ethnic.data.concepts)):
+        concept = output_ethnic.data.concepts[i]
+        if (i != len(output_ethnic.data.concepts) - 1):
+            ethnic = ethnic + '"%s": "%.2f",' % (concept.name, concept.value)
+        else:
+            ethnic = ethnic + '"%s": "%.2f"' % (concept.name, concept.value)
     ethnic = ethnic + '}'
 
     result = '{"age":' + age + ',\n"ethnic":' + ethnic + '}'
+
     print(result)
     return jsonify(result)
 

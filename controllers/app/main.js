@@ -63,8 +63,9 @@ router.route('/search-person-information')
                 if (linkedinData.contact.twitter.length) { // If the linkedin data returns twitter information, we get twitter information
                     let username = linkedinData.contact.twitter[0].name
                     response.content.twitter = await getData(`https://api.twitter.com/2/users/by/username/${username}?user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld&expansions=pinned_tweet_id&tweet.fields=attachments,author_id,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source,text,withheld`, TwitterKeys.bearerToken)
+                    response.content.twitter.existsData = true
                 } else {
-                    response.content.twitter = {}
+                    response.content.twitter = { existsData: false }
                 }
 
                 // Call the Google API for collects all the google information
@@ -77,12 +78,15 @@ router.route('/search-person-information')
 
                     if (result.inline_images !== undefined) {
                         photoInformation = await postData('http://10.150.0.3:3000/get-face-information', { imageUrl: result.inline_images[0].thumbnail })
-                        //photoInformation = JSON.parse(photoInformation)
+                        photoInformation = JSON.parse(photoInformation)
+                        photoInformation.data = true
+                    } else {
+                        photoInformation.data = false
                     }
 
                     response.content.photoInformation = photoInformation
                     response.content = filterInformation(response.content)
-                    await profile.create(response.content)
+                    await profile.create({ ...response.content, publicId })
                     res.json(response).status(200)
                 })
             }
