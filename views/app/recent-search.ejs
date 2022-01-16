@@ -47,13 +47,15 @@
                     <th>Perfil Completo</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="profiles-data">
+                  <% for (let profile of profiles) { %>
                   <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
+                    <td><%= profile.linkedin.name.toUpperCase() || '' %></td>
+                    <td><%= profile.linkedin.headline || '' %></td>
+                    <td><%= profile.linkedin.countryName || '' %></td>
+                    <td><a href="/profile?publicId=<%= profile.publicId %>" target="_blank"><span class="badge badge-success">Ver</span></a></td>
                   </tr>
+                  <% } %>
                 </tbody>
               </table>
             </div>

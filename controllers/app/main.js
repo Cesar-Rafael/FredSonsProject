@@ -113,6 +113,12 @@ router.route('/recent-search')
         res.render('app/recent-search', { profiles })
     })
 
+router.route('/get-profiles')
+    .get(async (req, res) => {
+        let profiles = await profile.find({})
+        res.json(profiles).status(200)
+    })
+
 // API that gets twitter information, but It's also limited for the basic plan, even so, we send a form expecting we can access to all APIs 
 router.route('/twitter/:query')
     .get(async (req, res) => {
