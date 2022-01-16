@@ -75,12 +75,12 @@ function convertToName(publicId) {
     array.forEach(word => {
         flag = false;
         for (let i = 0; i < word.length; i++) {
-            if(word[i] >= '0' && word[i] <= '9') {
-                flag = true; 
+            if (word[i] >= '0' && word[i] <= '9') {
+                flag = true;
                 break;
             }
         }
-        if(flag == false) {
+        if (flag == false) {
             name += ' ' + word;
         }
     });
@@ -89,34 +89,28 @@ function convertToName(publicId) {
 
 router.route('/search-data')
     .post(async (req, res) => {
-        let response = { result: 'NOK' }
+        let response = { result: 'NOK', content: {} }
+
         try {
             const { publicUrl } = req.body
-            // Example: https://www.linkedin.com/in/carlos-melgarejo-roman-291498206/
             let publicId = publicUrl.split('/')[4]
-            let name = convertToName(publicId);
-            console.log("publicID", publicId);
-            console.log("name", name);
-            await PythonShell.run(pythonScript, { mode: 'text', args: [publicId] }, async function (err, results) {
-                if (err) throw err;
-                let result = results[0]
-                result = result.replace(/False/g, false).replace(/True/g, true).replace(/'/g, '"')
-                response.content = JSON.parse(result)
+            let linkedinData = await postData('http://10.150.0.3:3000/get-linkedin-data', { publicId })
+            let name = linkedinData.firstName + linkedinData.lastName
+            response.content.linkedin = linkedinData
+            await search.json({
+                q: name, // reemplaza el nombre de busqueda
+                location: "Lima Region" // Usar la location de linkedin
+            }, (result) => {
+                //console.log(result)
+                //response.content.google = JSON.parse(result)
+                response.content.google = result
                 response.result = 'OK'
                 res.json(response).status(200)
-            });
-
-            await search.json({
-                q: name,
-                location: "Lima Region"
-            }, (result) => {
-                res.json({con: result}).status(200)
             })
 
         } catch (e) {
             console.log(e)
         }
-
     })
 
 router.route('/twitter/:query')
@@ -139,8 +133,21 @@ router.route('/google')
             q: "Franccesco Jaimes Agreda",
             location: "Lima Region"
         }, (result) => {
-            res.json({content: result}).status(200)
+            res.json({ content: result }).status(200)
         })
+    })
+
+router.route('/test')
+    .get(async (req, res) => {
+        let response = { result: 'NOK' }
+        try {
+            let linkedinData = await postData('http://10.150.0.3:3000/get-linkedin-data', { publicId: 'cesar-david-rafael-artica-a6a504199' })
+            response.content = linkedinData
+            response.result = 'OK'
+            res.json(response).status(200)
+        } catch (e) {
+            console.log(e)
+        }
     })
 
 /*
